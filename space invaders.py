@@ -4,7 +4,14 @@ import random
 import time
 from pygame import mixer
 
-
+mixer.init()
+pygame.mixer.music.load(os.path.join("audio","1.mp3"))
+pygame.mixer.music.set_volume(1)
+pygame.mixer.music.play(-1)
+laser_player=pygame.mixer.Sound(os.path.join("audio","long.wav"))
+laser_player.set_volume(0.6)
+laser_enemy=pygame.mixer.Sound(os.path.join("audio","short.wav"))
+laser_enemy.set_volume(0.6)
 
 pygame.font.init()
 width=800
@@ -128,8 +135,10 @@ class Enemy(Ship):
     def shoot(self):
         if self.cool_down_counter==0:
             laser=Laser(self.x-10,self.y,self.laser_image)
-            self.lasers.append(laser)
+            self.lasers.append(laser)            
             self.cool_down_counter=1
+            if height>self.x>0 and width>self.y>0:
+                laser_enemy.play()
     def move(self,vel):
         self.y+=vel
 
@@ -177,7 +186,7 @@ def main():
         player.draw(win)
         if lost==True:
             out_level=level
-            lost_label=lost_font.render(f"you lost your ship !! On the level {out_level}",1,(155,255,0))
+            lost_label=lost_font.render(f"You lost your ship !! On the level {out_level}",1,(155,255,0))
             win.blit(lost_label,(width/2-lost_label.get_width()/2,350))
 
 
@@ -218,6 +227,7 @@ def main():
             player.y+=player_vel
         if keys[pygame.K_SPACE]:
             player.shoot()
+            laser_player.play()
         for enemy in enmies:
             enemy.move(enime_val)
             enemy.move_laser(laser_val,player)
