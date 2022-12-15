@@ -20,6 +20,7 @@ height=700
 
 win=pygame.display.set_mode((width,height))
 pygame.display.set_caption("space invaders")
+pygame.display.set_icon(pygame.image.load(os.path.join("icon","icon.svg")))
 
 Red_space_ship=pygame.image.load(os.path.join("assets","pixel_ship_red_small.png")).convert_alpha()
 green_space_ship=pygame.image.load(os.path.join("assets","pixel_ship_green_small.png")).convert_alpha()
@@ -161,7 +162,7 @@ def main():
     player_vel=5
     enime_val=1
     main_font=pygame.font.SysFont("comicsans",40)
-    lost_font=pygame.font.SysFont("comicsans",30)
+    lost_font=pygame.font.SysFont("comicsans",40)
     enmies=[]
     wave_length=5
     lost=False
@@ -246,7 +247,7 @@ def main_menu():
     run=True
     while run:
         win.blit(background,(0,0))
-        title_label=title_font.render( "press the mouse button to begin.. ",1,(0,255,0))
+        title_label=title_font.render( "Press the mouse button to begin.. ",1,(0,255,0))
         win.blit(title_label,(width/2-title_label.get_width()/2,350))
         pygame.display.update()
         for event in pygame.event.get():
